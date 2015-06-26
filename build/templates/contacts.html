@@ -1,0 +1,159 @@
+
+	
+
+
+<div class="row header">
+	<div class="col-sm-6">
+		<div class="header">
+
+			<h3 style="display:inline;">Contacts 
+                <div class="apps-search hidden-xs">
+                    <i class="fa fa-search"></i>    
+                    <input class="apps-search-input" type="text" ng-model="searchText">
+                </div>
+            </h3>   
+
+		</div>
+        <div ng-show="searchToggle"class="row header" >
+    <div class="apps-search">
+        <i class="fa fa-search"></i>    
+        <input class="apps-search-input" type="text" ng-model="searchText">
+    </div>
+
+</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="header pull-right">
+			<!-- REFRESH -->
+			<button type="button" tooltip="Refresh Contacts" class="btn btn-default" ng-click="doRefresh()"><i class="fa fa-refresh"></i></button>
+            <a type="button" tooltip="Download CSV" class="btn btn-default" ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="contacts.csv"><i class="fa fa-download"></i></a>
+
+			  <!-- Single button -->
+			 <!--    <div class="btn-group" dropdown is-open="status.isopen"> -->
+			      <button type="button" class="btn btn-primary" ng-click="open()">
+			        Add Contact
+			      </button>
+           
+			      <!-- <ul class="dropdown-menu" role="menu">
+			        <li><a href="#">Single Contact</a></li>
+			        <li><a href="#">Upload CSV</a></li>
+			      </ul>
+			    </div> -->
+		</div>
+	</div>
+</div>
+
+<div ng-show="delegateToggle"class="row header" >
+	<div class="col-sm-6">
+		<p style="color:#2878BB;">Select a User to Assign Contacts</p>
+	</div>
+	<div class="col-sm-6">
+		<button style="margin-bottom:5px;" class="btn btn-warning pull-right" ng-click="assignContacts()">Assign Contacts</button>
+	</div>
+
+<div class="horizontal">
+	<button style="margin-right: 10px;" ng-repeat="user in allusers" class="btn btn-default" type="button" ng-model="radio.model" btn-radio="user.name">{{user.name}}</button>
+	  </div>
+</div>
+
+
+
+<div class="row">
+
+<div class="table-responsive">
+
+
+
+<span us-spinner="{color: '#4d90fe'}" spinner-key="spinner-2"></span>
+
+    <table ng-table="tableParams" class="table table-striped table-hover" export-csv="csv">
+        <tr class="box" ng-repeat="contact in $data | filter:searchText" >
+        <td ng-show="delegateToggle" width="30" style="text-align: left">
+            <input type="checkbox" ng-model="checkboxes.items[contact.id]" />
+        </td>
+
+            <td data-title="'Name'" sortable="'name'">
+            <span ng-if="!contact.$edit"> <a>{{contact.Name}}</a> </span>
+            <div ng-if="contact.$edit"><input class="form-control" type="text" ng-model="contact.Name" /></div>
+              
+            </td>
+            <td data-title="'Email'" sortable="'email'">
+             <span ng-if="!contact.$edit"> {{contact.Email}} </span>
+                
+                <div ng-if="contact.$edit"><input class="form-control" type="text" ng-model="contact.Email" /></div>
+            </td>
+            <td data-title="'Course'" sortable="'course'">
+             <span ng-if="!contact.$edit"> {{contact.Course}}</span>
+                
+                <div ng-if="contact.$edit"><input class="form-control" type="text" ng-model="contact.Course" /></div>
+            </td>
+            </td>
+            <td data-title="'Status'" sortable="'status'">
+            <span ng-if="!contact.$edit"> {{contact.Status}}</span> 
+                <div ng-if="contact.$edit"><input class="form-control" type="text" ng-model="contact.Status" /></div>
+            </td>
+           
+            <td data-title="'Supt Profile'" sortable="'supt'">
+            <span ng-if="!contact.$edit"> {{contact.SA4ContactOnGolf.Profile}}</span>
+            <div ng-if="contact.$edit">
+                <select ng-model="contact.SA4ContactOnGolf.Profile"
+                    ng-options="item.text as item.text for item in data.picklistProfile">
+                </select>    
+            </td>
+             </td>
+            <td data-title="'Style'" sortable="'style'">
+            <span ng-if="!contact.$edit"> {{contact.SA4ContactOnGolf.Style}}</span>
+            <div ng-if="contact.$edit">
+                <select ng-model="contact.SA4ContactOnGolf.Style"
+                    ng-options="item.text as item.text for item in data.picklistStyle">
+                </select> 
+            </div>    
+            </td>
+             <td data-title="'Innovator'" sortable="'innovator'">
+            <span ng-if="!contact.$edit"> {{contact.SA4ContactOnGolf.Innovator}}</span>
+            <div ng-if="contact.$edit">
+                <select ng-model="contact.SA4ContactOnGolf.Innovator"
+                    ng-options="item.text as item.text for item in data.picklistInnovator">
+                </select>  
+            </td>
+            <td data-title="'Acct Manager'" sortable="'owner'">
+                <span ng-if="!contact.$edit">{{contact.AccountManager.UserInfo.NameLF}}</span>
+			 <div ng-if="contact.$edit">
+				<select ng-model="data.AccountManager"
+                    ng-options="item as item.NameLF for item in data.picklistAccountManager" style="width: 100px;">
+                </select>  
+
+			</div>
+
+            </td>
+
+            <td data-title="'Actions'">
+            
+             <a href="#">
+            	
+            	<a ng-if="!contact.$edit" href="" ng-click="enableInlineEdit(contact)" style="font-size:20px;"><i class="fa fa-edit"></i></a>
+                <a ng-if="contact.$edit" href="" class="btn btn-primary btn-xs" ng-click="saveContact(contact)">Save</a>
+            </a>
+         <!--    <a ng-hide="contact.$edit" href="mailto:{{contact.email}}">
+            	<i class="fa fa-envelope-o"></i>
+            </a> -->
+   <!--          <a ng-hide="contact.$edit" href="#">
+            	<i class="fa fa-check-square-o"></i>
+            </a> -->
+                
+            </td>
+
+        </tr>
+    </table>
+
+</div>
+  </div>
+
+
+
+<!-- ALERTS -->
+
+  	<div class="alert-column">
+			<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+		</div>

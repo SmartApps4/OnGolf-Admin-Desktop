@@ -1,0 +1,56 @@
+<style>
+	body {
+		   background: url(img/course-bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	}
+
+
+</style>
+
+
+<div class="container">
+<span us-spinner="{color: '#4d90fe'}" spinner-key="spinner-2"></span>
+        <div class="card card-container">
+
+        
+
+        	<div class="card-header">
+        		 <img class="profile-img-card" src="img/ongolf.png" />
+        	</div>
+          
+          	<div class="card-body">
+      
+	            <form class="form-signin">
+	                <label for="userName">User Name</label>
+	                <input type="username" id="inputUserName" class="form-control" placeholder="User Name" ng-model="loginData.userName" required autofocus>
+	                <label for="password">Password</label>
+	                <input type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="loginData.password">
+	             	<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-click="doLogin()">Login</button>
+
+                <br>
+                <div style="text-align:center;">
+                <p style="color:#111">Demo Data</p>
+
+                <div class="switch">
+
+                  <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="data.useDemoData"> 
+                  <label for="cmn-toggle-1" style="margin:auto;"></label>
+                </div>
+                </div>
+
+	            </form><!-- /form -->
+
+      <!--       <a ui-sref="forgot" class="forgot-password">
+                FORGOT PASSWORD
+            </a>
+ -->
+
+          	</div>
+           
+            
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+

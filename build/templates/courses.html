@@ -1,0 +1,80 @@
+<div class="row header">
+	<div class="col-sm-6">
+		<div class="header">
+			<h3 style="display:inline;">Courses 
+                <div class="apps-search hidden-xs">
+                    <i class="fa fa-search"></i>    
+                    <input class="apps-search-input" type="text" ng-model="searchText">
+                </div>
+            </h3>   
+
+
+		</div>
+        <div ng-show="searchToggle"class="row header" >
+    <div class="apps-search">
+        <i class="fa fa-search"></i>    
+        <input class="apps-search-input" type="text" ng-model="searchText">
+    </div>
+
+</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="header pull-right">
+			<!-- REFRESH -->
+			<button type="button" tooltip="Refresh Contacts" class="btn btn-default" ng-click="doRefresh()"><i class="fa fa-refresh"></i></button>
+            <a type="button" tooltip="Download CSV" class="btn btn-default" ng-mousedown="csv.generate()" ng-href="{{ csv.link() }}" download="courses.csv"><i class="fa fa-download"></i></a>
+
+			  <!-- Single button -->
+			 <!--    <div class="btn-group" dropdown is-open="status.isopen"> -->
+			      <button type="button" class="btn btn-primary" ng-click="open()">
+			        Add Course
+			      </button>
+           
+			      <!-- <ul class="dropdown-menu" role="menu">
+			        <li><a href="#">Single Contact</a></li>
+			        <li><a href="#">Upload CSV</a></li>
+			      </ul>
+			    </div> -->
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="box">
+
+<div class="table-responsive">
+
+<span us-spinner="{color: '#4d90fe'}" spinner-key="spinner-2"></span>
+
+    <table ng-table="tableParams" class="table table-striped" export-csv="csv">
+        <tr ng-repeat="course in $data | filter:searchText">
+            <td data-title="'Name'" sortable="'Course'">
+               <a ui-sref="app.course-detail({contactId: '{{course.id}}'})">{{course.Course}}</a> 
+            </td>
+            <td data-title="'Location'" sortable="'course'">
+                {{course.Address.City}} {{course.Address.State}}, {{course.Address.PostalCode}}
+            </td>
+            <td data-title="'Type'" sortable="'region'">
+                {{course.SubType}}
+            </td>
+            <td data-title="'Status'" sortable="'status'">
+                {{course.Status}}
+            </td>
+            <td data-title="'Profile'" sortable="'region'">
+                 Irrigation - {{course.SA4AccountOnGolf.IrrigationSystem}}<br>
+                 Pump - {{course.SA4AccountOnGolf.PumpStation}}<br>
+                 Soil - {{course.SA4AccountOnGolf.SoilSensorSystem}}
+
+            </td>
+            <td data-title="'Superintendent'" sortable="'supt'">
+                {{firstMatch(course.Contacts.$resources, 'IsPrimary', true, 'FullName')}}
+            </td>
+            <td data-title="'Account Manager'" sortable="'owner'">
+                {{course.AccountManager.UserInfo.NameLF}}
+            </td>
+        </tr>
+    </table>
+
+</div>
+</div>
+  </div>

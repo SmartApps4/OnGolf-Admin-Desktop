@@ -1,9 +1,9 @@
 {
-  "name": "Ongolf_Desktop",
-  "productName": "OnGolf",
-  "identifier": "com.smartapps4.ongolf-desktop",
+  "name": "Ongolf_Admin_Desktop",
+  "productName": "OnGolf_Admin",
+  "identifier": "com.smartapps4.ongolf-admin-desktop",
   "description": "Custom Built smart app for OnGolf LLC",
-  "version": "0.1.7",
+  "version": "0.0.1",
   "author": "Smartapps4",
   "main": "main.js",
   "config": {

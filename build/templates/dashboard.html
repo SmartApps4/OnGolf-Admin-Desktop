@@ -1,0 +1,151 @@
+<div class="row header">
+	<div class="col-sm-12">
+		<div class="header">
+			<h3 style="display:inline;">Dashboard 
+			</h3>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+<div class="col-xs-12">
+	<p style="color:#2878BB">Counts</p>
+<hr>
+<br>
+</div>
+		<div class="metrics">
+		<div class="col-sm-4 col-xs-6">
+			<div class="box">
+				<div class="box-header">
+				Targets
+				</div>
+				<h1>{{data.ContactCounts.Targets}}</h1>
+			</div>
+			</div>
+			<div class="col-sm-4 col-xs-6">
+				<div class="box">
+				<div class="box-header">
+				Qualified
+				</div>
+				<h1>{{data.ContactCounts.Qualified}}</h1>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-6">
+				<div class="box">
+				<div class="box-header">
+				Prospects
+				</div>
+				<h1 >{{data.ContactCounts.Prospects}}</h1>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-6">
+				<div class="box">
+				<div class="box-header">
+				Opportunities
+				</div>
+				<h1>{{data.Pipeline.TotalCount}}</h1>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-6">
+				<div class="box">
+				<div class="box-header">
+				Customers
+				</div>
+				<h1>{{data.CustomerCount}}</h1>
+				</div>
+			</div>
+			<div class="col-sm-4 col-xs-6">
+				<div class="box">
+				<div class="box-header">
+				Total Responses
+				</div>
+				<h1>{{data.TotalResponses}}</h1>
+				</div>
+			</div>
+		</div>
+</div>
+
+
+
+
+<div class="row">
+
+<div class="col-xs-12">
+	<p style="color:#2878BB">Pipeline</p>
+<hr>
+<br>
+</div>
+	<div class="col-xs-6">
+		<div class="box">
+		<div class="box-header">
+			Pipeline
+		</div>
+		<div class="box-body">
+			<canvas id="bar" class="chart chart-bar" data="data.Pipeline.values"
+  				labels="data.Pipeline.labels"></canvas> 
+
+		</div>
+			
+
+		</div>
+	</div>
+
+	<div class="col-xs-6">
+		<div class="box">
+		<div class="box-header">
+			Completed Activities
+		</div>
+		<div class="box-body">
+			<canvas id="bar2" class="chart chart-bar" data="data.History.values"
+  				labels="data.History.labels"></canvas> 
+
+		</div>
+			
+
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+	<p style="color:#2878BB">Customers</p>
+<hr>
+<br>
+</div>
+
+	<div class="col-sm-6">
+	<div class="box">
+	<div class="box-header">
+			Won / Lost
+		</div>
+		<div class="box-body">
+			<canvas id="doughnut" class="chart chart-doughnut" data="data.OppStatus.values"
+  labels="data.OppStatus.labels" options="pieOptions"></canvas> 
+		</div>
+			
+		</div>
+		
+	</div>
+
+	
+	<div class="col-sm-6">
+	<div class="box">
+		<div class="box-header">
+			Course Type
+		</div>
+		<div class="box-body">
+			<canvas id="doughnut2" class="chart chart-doughnut" data="data.CourseType.values"
+  labels="data.CourseType.labels" options="pieOptions"></canvas> 
+		</div>
+		</div>
+
+		
+	</div>
+	
+		
+	
+
+
+
+	</div>
+</div>
+
+

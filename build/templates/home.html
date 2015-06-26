@@ -1,0 +1,75 @@
+<nav class="navbar navbar-default navbar-static-top twoRow" ng-controller="NavCtrl">
+  <div class="container-fluid">
+
+  <div class="navbar-upper">
+    <div class="upper-inner">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ui-sref="app.dashboard"><img src="img/ongolf.png" alt="OnGolfUsa"></a>
+    </div>
+
+
+       <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{data.configData.fullName}} <span class="fa fa-chevron-down"></span></a>
+          <ul class="dropdown-menu" role="menu">
+      <!--       <li><a ui-sref="app.settings" ui-sref-active="active">Admin</a></li> -->
+     <!--        <li><a href="#">Profile</a></li> -->
+            <li><a href="#" ng-click="logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      </div>
+       </div>
+
+       <div class="navbar-lower">
+        <div class="lower-inner">
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      <li><a ui-sref="app.dashboard" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref-active="active"><span>Dashboard</span></a></li>
+      <li><a ui-sref="app.activity" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref-active="active"><span>Latest Activity</span></a></li>
+      <li><a ui-sref="app.opps" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref-active="active"><span>Pipeline</span></a></li>
+      <!-- <li><a ui-sref="app.activities" ui-sref-active="active"><span>Activity Streem</span></a></li> -->
+      <li><a ui-sref="app.contacts" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref-active="active"><span>Contacts</span></a></li>
+      <li><a ui-sref="app.courses" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref-active="active"><span>Courses</span></a></li>
+
+      <li><a ui-sref="app.campaigns" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref-active="active"><span>Campaigns</span></a></li>
+      </ul>
+      <ul class="nav navbar-nav visible-sm visible-xs">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Jordan Berry <span class="fa fa-chevron-down"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" ui-sref="app.settings" ui-sref-active="active">Admin Panel</a></li>
+            <!-- <li><a href="#">Profile</a></li> -->
+            <li><a href="#" ng-click="logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+   
+    </div><!-- /.navbar-collapse -->
+    </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="container">
+<!-- UI ROUTER VIEW -->
+  <div ui-view></div>
+<!-- End View -->
+</div>
+
+<footer>
+      <div class="container text-center">
+        <p class="footer-text">© 2015 · OnGolfUSA.com</p>
+      </div>
+</footer>

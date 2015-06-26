@@ -11,7 +11,7 @@ var moment = require('moment');
 
 var mainWindow;
 
-moment().format();
+// moment().format();
 
 // github release updater options
 var options = {
