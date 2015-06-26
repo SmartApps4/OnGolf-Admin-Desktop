@@ -1,0 +1,43 @@
+<div class="row header">
+	<div class="col-sm-12">
+		<div class="header">
+			<h3 style="display:inline;">Campaigns
+			</h3>
+		</div>
+	</div>
+</div>
+
+<span us-spinner="{color: '#4d90fe'}" spinner-key="spinner-2"></span>
+<div class="row">
+<a ui-sref="">
+	<div class="col-sm-4 text-center" ng-repeat="campaign in data.campaignSummaries">
+			<div class="box campaign">
+				<div class="box-header">
+				{{campaign.Campaignname}}
+				</div>
+
+				
+				<h3>{{campaign.Targets}}</h3>
+				<h4>Targets</h4>
+				<br>
+
+
+
+				<div class="row box-footer text-center">
+				<div class="col-xs-4">
+					<p>{{campaign.Responses}}</p>
+					<p>Opens</p>
+				</div>
+				<div class="col-xs-4">
+					<p>{{campaign.Clicks}}</p>
+					<p>Clicks</p>
+				</div>
+				<div class="col-xs-4">
+					<p>{{campaign.Unsubscribes}}</p>
+					<p>Unsubscribes</p>
+				</div>
+				</div>
+			</div>
+		</div>
+</a>
+</div>

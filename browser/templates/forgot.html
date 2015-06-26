@@ -1,0 +1,38 @@
+<style>
+  body {
+       background: url(img/course-bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  }
+
+
+</style>
+
+
+<div class="container">
+        <div class="card card-container">
+
+        	<div class="card-header">
+        		 <img class="profile-img-card" src="img/ongolf.png" />
+        	</div>
+          
+          	<div class="card-body">
+
+
+            <h5 class="text-center"><b>Forgot Your Password?</b> <br><br>Enter your email below to recieve a temporary login</h5>
+            <br>
+      
+	            <form class="form-signin">
+	                <input type="email" id="inputEmail" class="form-control" placeholder="info@ongolfusa.com" ng-model="user.email" required autofocus>
+	             	<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-click="forgot()">Send Password Reset</button>
+	            </form><!-- /form -->
+                 <a ui-sref="login"><icon class="fa fa-arrow-left"></icon> BACK TO LOGIN</a>
+
+          	</div>
+           
+            
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+

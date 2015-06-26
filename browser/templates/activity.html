@@ -1,0 +1,32 @@
+<div class="row header">
+    <div class="col-sm-12">
+        <div class="header">
+            <h3 style="display:inline;">Latest Activity
+            </h3>
+        </div>
+    </div>
+</div>
+
+	<div class="row">
+    <span us-spinner="{color: '#4d90fe'}" spinner-key="spinner-2"></span>
+        <div class="col-sm-8 col-sm-offset-2" ng-repeat="item in data.newHistory"> 
+        <div class="date text-center" >
+            <h3>{{item[0] | amDateFormat:'dddd MMM DD, YYYY'}}  </h3>
+            <hr>
+            <br>
+        </div>
+        <div class="timeline-centered">
+            <article class="timeline-entry" ng-repeat="item in item[1]">
+                <div class="timeline-entry-inner">
+                    <div class="timeline-icon bg-success">
+                       {{item.CompletedDate | amDateFormat:'H:mm'}}          
+                    </div>
+                    <div class="timeline-label">
+                        <h2><a href="#">{{item.ContactName}}@ {{item.AccountName}}</a> <span>{{item.Type.substr(2)}} - {{item.Category}}</span></h2>
+                        <p>{{item.Notes}}</p>
+                    </div>
+                </div>
+            </article>
+            </div> 
+        </div>
+    </div>
