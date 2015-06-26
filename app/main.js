@@ -15,7 +15,7 @@ var mainWindow;
 
 // github release updater options
 var options = {
-  repo: 'SmartApps4/OnGolf-Desktop',
+  repo: 'SmartApps4/OnGolf-Admin-Desktop',
   currentVersion: app.getVersion()
 }
 
@@ -29,8 +29,8 @@ var update = new gh_releases(options, function (auto_updater) {
 
 // Preserver of the window size and position between app launches.
 var mainWindowState = windowStateKeeper('main', {
-    width: 512,
-    height: 768
+    width: 600,
+    height: 400
 });
 
 
@@ -50,10 +50,8 @@ function createMainWindow () {
         'y': mainWindowState.y,
         'width': mainWindowState.width,
         'height': mainWindowState.height,
-        'max-width': 640,
-        'max-height': 800,
-        'min-width': 400,
-        'min-height': 600  
+        'min-width': 500,
+        'min-height': 300  
 });
 
 
