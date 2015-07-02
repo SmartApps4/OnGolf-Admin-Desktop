@@ -217,7 +217,7 @@ return {
         //add relationship if present 
         (feed.relationship != null ? "/" + feed.relationship : "") + 
         //add format type
-        "?format=json&count=25" + 
+        "?format=json&count=200" + 
         //Build query section and add limitValue if querlyLimit included
         (feed.query != null || feed.queryLimit != null ? "&where=" :"" ) + 
         (feed.query != null ?  feed.query : "") + 

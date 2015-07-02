@@ -3,7 +3,7 @@
   "productName": "OnGolf_Admin",
   "identifier": "com.smartapps4.ongolf-admin-desktop",
   "description": "Custom Built smart app for OnGolf LLC",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Smartapps4",
   "main": "main.js",
   "config": {

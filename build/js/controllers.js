@@ -14,6 +14,11 @@ angular.module('OnGolf-Web.controllers', [])
 
 .controller('LoginCtrl', function($scope, $state, $rootScope, $firebaseAuth, usSpinnerService, CRM) {
 
+  if (typeof(process) != "undefined") {
+      var remote = require('remote');
+      var electronApp = remote.require('app');
+      $scope.version = electronApp.getVersion();
+    }
 
   $scope.data = {}; 
   $scope.data.useDemoData = false; 
@@ -270,9 +275,7 @@ $timeout(function() {
       $scope.data.AccountManager = {}; 
     });
     contact.$edit = false; 
-  }
-
-
+  }; 
 
   //Refresh on first entry
   $scope.doRefresh();
