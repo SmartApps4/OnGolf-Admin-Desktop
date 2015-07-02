@@ -65,15 +65,21 @@ usSpinnerService.spin('spinner-2');
 })
 
 
-.controller('DashboardCtrl', function($scope, usSpinnerService, currentCRM) {
+.controller('DashboardCtrl', function($scope, $timeout, usSpinnerService, currentCRM) {
 
   $scope.data = {}; 
   $scope.data.AccountCounts = {}; 
   $scope.data.ContactCounts = {}; 
 
+  $scope.spinneractive = true;
+
+
+$timeout(function() {
+  usSpinnerService.spin('spinner-3');
+}, 100);
 
   $scope.doRefresh = function() {
-    usSpinnerService.spin('spinner-2');
+    usSpinnerService.spin('spinner-3');
     currentCRM.getList(currentCRM.entities.AccountStatusSummary)
     .then(function(results){
       $scope.data.AccountStatus = results;
@@ -81,9 +87,9 @@ usSpinnerService.spin('spinner-2');
     currentCRM.getList(currentCRM.entities.ContactStatusSummary)
     .then(function(results){
       $scope.data.ContactStatus = results; 
-      $scope.data.ContactCounts.Targets = _.result(_.find(results,'Status','Target'),'StatusCount'); 
-      $scope.data.ContactCounts.Qualified = _.result(_.find(results,'Status','Qualify'),'StatusCount'); 
-      $scope.data.ContactCounts.Prospects = _.result(_.find(results,'Status','Prospect'),'StatusCount'); 
+      $scope.data.ContactCounts.Targets = _.result(_.find(results,'Status','Target'),'Statuscount'); 
+      $scope.data.ContactCounts.Qualified = _.result(_.find(results,'Status','Qualify'),'Statuscount'); 
+      $scope.data.ContactCounts.Prospects = _.result(_.find(results,'Status','Prospect'),'Statuscount'); 
 
     })
     currentCRM.getList(currentCRM.entities.OpportunityStageSummary)
@@ -93,7 +99,7 @@ usSpinnerService.spin('spinner-2');
       $scope.data.Pipeline.series = ['Pipeline'];
       $scope.data.Pipeline.labels = _.pluck(results,'Stage'); 
       $scope.data.Pipeline.values = []; 
-      $scope.data.Pipeline.values[0]  = _.pluck(results,'StageCount');
+      $scope.data.Pipeline.values[0]  = _.pluck(results,'Stagecount');
       $scope.data.Pipeline.TotalCount = _.sum($scope.data.Pipeline.values[0]);
     })
     currentCRM.getList(currentCRM.entities.HistoryTypeSummary)
@@ -126,10 +132,13 @@ usSpinnerService.spin('spinner-2');
     .then(function(results){
       $scope.data.CampaignSummary = results; 
       $scope.data.TotalResponses = _.sum(_.pluck(results,'Responses'));
+
     })
     .finally(function(){
       //Stop the refresher from spinning
-      usSpinnerService.stop('spinner-2');
+      $timeout(function() {
+        usSpinnerService.stop('spinner-3');
+      }, 2000);
     })
   };
 
@@ -157,6 +166,10 @@ usSpinnerService.spin('spinner-2');
 .controller('ActivityCtrl', function($scope, $filter, $q, $modal, $log, $timeout, usSpinnerService, ngTableParams, currentCRM) {
   $scope.data = {}; 
 
+  $timeout(function() {
+  usSpinnerService.spin('spinner-2');
+}, 100);
+
   $scope.doRefresh = function() {
     usSpinnerService.spin('spinner-2');
     currentCRM.getList(currentCRM.entities.history)
@@ -181,7 +194,9 @@ usSpinnerService.spin('spinner-2');
     })
     .finally(function(){
       //Stop the refresher from spinning
-      usSpinnerService.stop('spinner-2');
+       $timeout(function() {
+        usSpinnerService.stop('spinner-2');
+      }, 1500);
     })
   };
 
@@ -196,6 +211,10 @@ usSpinnerService.spin('spinner-2');
   $scope.data = {};
   $scope.data.contacts = [];
   $scope.alerts = [];
+
+   $timeout(function() {
+  usSpinnerService.spin('spinner-2');
+}, 100);
 
   $scope.doRefresh = function() {
     usSpinnerService.spin('spinner-2');
@@ -226,7 +245,9 @@ usSpinnerService.spin('spinner-2');
     })
     .finally(function(){
       //Stop the refresher from spinning
-      usSpinnerService.stop('spinner-2');
+       $timeout(function() {
+        usSpinnerService.stop('spinner-2');
+      }, 1500);
     })
   };
 
@@ -391,11 +412,15 @@ $scope.assignContacts = function(user,items) {
 // New contact modal
   $scope.open = function () {
 
-
     var modalInstance = $modal.open({
       templateUrl: 'templates/new-contact.html',
       controller: 'ModalInstanceCtrl',
-      size: 'lg'
+      size: 'lg',
+      resolve: {
+        pickList: function () {
+          return $scope.data.picklistAccountManager;
+        }
+      }
     });
 
     modalInstance.result.then(function () {
@@ -428,6 +453,10 @@ $scope.assignContacts = function(user,items) {
   $scope.data.courses = [];
   $scope.alerts = [];
 
+   $timeout(function() {
+  usSpinnerService.spin('spinner-2');
+}, 100);
+
   $scope.doRefresh = function() {
     usSpinnerService.spin('spinner-2');
     currentCRM.getList(currentCRM.entities.courses)
@@ -435,11 +464,35 @@ $scope.assignContacts = function(user,items) {
       $scope.data.courses = results;
       $scope.tableParams.reload(); 
     })
+    currentCRM.getList(currentCRM.entities.accountManager)
+    .then(function(results){
+      $scope.data.picklistAccountManager = results; 
+    })
     .finally(function(){
       //Stop the refresher from spinning
-      usSpinnerService.stop('spinner-2');
+       $timeout(function() {
+        usSpinnerService.stop('spinner-2');
+      }, 100);
     })
   };
+
+    $scope.enableInlineEdit = function(course){ 
+    //Grab AccountManger so it can be changed via drop down 
+    $scope.data.AccountManager = course.AccountManager; 
+    course.$edit = true; 
+  }; 
+
+
+  $scope.saveCourse = function(course){ 
+    // update AccountManager in case it changed 
+    course.AccountManager = $scope.data.AccountManager; 
+    currentCRM.updateItem(currentCRM.entities.course,course.$key, course)
+    .then(function(results){
+      $scope.data.savedCourse = results;
+  
+    });
+    course.$edit = false; 
+  }
 
   //Filter used to filter arrays by Type 
 $scope.firstMatch = function (items, field, value, returnField) {
@@ -493,7 +546,12 @@ for (var i = 0, len = numbers.length; i < len; i++) {
     var modalInstance = $modal.open({
       templateUrl: 'templates/new-course.html',
       controller: 'CourseModalInstanceCtrl',
-      size: 'lg'
+      size: 'lg',
+      resolve: {
+        pickList: function () {
+          return $scope.data.picklistAccountManager;
+        }
+      }
     });
 
     modalInstance.result.then(function () {
@@ -509,6 +567,10 @@ for (var i = 0, len = numbers.length; i < len; i++) {
   $scope.data.opps = [];
   $scope.alerts = [];
 
+$timeout(function() {
+  usSpinnerService.spin('spinner-2');
+}, 100);
+
   $scope.doRefresh = function() {
     usSpinnerService.spin('spinner-2');
     currentCRM.getList(currentCRM.entities.opps)
@@ -516,11 +578,35 @@ for (var i = 0, len = numbers.length; i < len; i++) {
       $scope.data.opps = results;
       $scope.tableParams.reload(); 
     })
+     currentCRM.getList(currentCRM.entities.courses)
+    .then(function(results){
+      $scope.data.courses = results;
+    })
     .finally(function(){
       //Stop the refresher from spinning
-      usSpinnerService.stop('spinner-2');
+      $timeout(function() {
+        usSpinnerService.stop('spinner-2');
+      }, 1500);
     })
   };
+
+    $scope.enableInlineEdit = function(opp){ 
+    //Grab AccountManger so it can be changed via drop down 
+    $scope.data.AccountManager = opp.AccountManager; 
+    opp.$edit = true; 
+  }; 
+
+
+  $scope.saveOpp = function(opp){ 
+    // update AccountManager in case it changed 
+    opp.AccountManager = $scope.data.AccountManager; 
+    currentCRM.updateItem(currentCRM.entities.opps,opp.$key, opp)
+    .then(function(results){
+      $scope.data.savedOpp = results;
+  
+    });
+    opp.$edit = false; 
+  }
 
   //Filter used to filter arrays by Type 
 $scope.firstMatch = function (items, field, value, returnField) {
@@ -543,7 +629,6 @@ for (var i = 0, len = numbers.length; i < len; i++) {
   }
   console.log('Loop will continue.');
 }
-
 
   //Refresh on first entry
   $scope.doRefresh();
@@ -574,7 +659,12 @@ for (var i = 0, len = numbers.length; i < len; i++) {
     var modalInstance = $modal.open({
       templateUrl: 'templates/new-opp.html',
       controller: 'OppModalInstanceCtrl',
-      size: 'lg'
+      size: 'lg',
+      resolve: {
+        courses: function () {
+          return $scope.data.courses;
+        }
+      }
     });
 
     modalInstance.result.then(function () {
@@ -597,6 +687,10 @@ for (var i = 0, len = numbers.length; i < len; i++) {
   $scope.data = {};
   $scope.data.campaigns = [];
   $scope.alerts = [];
+
+  $timeout(function() {
+  usSpinnerService.spin('spinner-2');
+}, 100);
 
   $scope.doRefresh = function() {
     usSpinnerService.spin('spinner-2');
@@ -622,7 +716,9 @@ for (var i = 0, len = numbers.length; i < len; i++) {
     })
     .finally(function(){
       //Stop the refresher from spinning
-      usSpinnerService.stop('spinner-2');
+       $timeout(function() {
+        usSpinnerService.stop('spinner-2');
+      }, 1500);
     })
   };
 
@@ -642,8 +738,33 @@ for (var i = 0, len = numbers.length; i < len; i++) {
 
 // Modal Controllers
 
-.controller('ModalInstanceCtrl', function($scope, $modalInstance) {
+.controller('ModalInstanceCtrl', function($scope, $modalInstance, CRM, pickList) {
 
+  $scope.pickList = pickList;
+
+  $scope.data = {};
+
+  $scope.ok = function () {
+
+  
+
+    console.log(angular.toJson($scope.data))
+    //CREATE USER HERE
+    // currentCRM.createItem(currentCRM.entities.contact, $scope.data.contact)
+
+    // $modalInstance.close($scope.user);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+})
+
+.controller('CourseModalInstanceCtrl', function($scope, $modalInstance, pickList) {
+
+  $scope.pickList = pickList;
+
+  $scope.data = {};
 
   $scope.ok = function () {
 
@@ -657,27 +778,16 @@ for (var i = 0, len = numbers.length; i < len; i++) {
   };
 })
 
-.controller('CourseModalInstanceCtrl', function ($scope, $modalInstance) {
+
+.controller('OppModalInstanceCtrl', function ($scope, $modalInstance, courses) {
+
+
+  $scope.courses = courses;
+  $scope.data = {};
 
   $scope.ok = function () {
 
     //CREATE USER HERE
-
-    $modalInstance.close($scope.user);
-  };
-
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-})
-
-
-.controller('OppModalInstanceCtrl', function ($scope, $modalInstance) {
-
-  $scope.ok = function () {
-
-    //CREATE USER HERE
-
     $modalInstance.close($scope.user);
   };
 

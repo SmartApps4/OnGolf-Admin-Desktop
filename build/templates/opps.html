@@ -48,35 +48,56 @@
 
     <table ng-table="tableParams" class="table table-striped" export-csv="csv">
         <tr ng-repeat="opp in $data | filter:searchText">
-          <td data-title="'Account Manager'" sortable="'owner'">
-                {{opp.AccountManager.UserInfo.NameLF}}
+          <td data-title="'Account Manager'" sortable="'AccountManager.UserInfo.NameLF'">
+                <span ng-if="!opp.$edit">{{opp.AccountManager.UserInfo.NameLF}}</span>
+            <!--     <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="opp.AccountManager.UserInfo.NameLF" /></div> -->
             </td>
-            <td data-title="'Superintendent'" sortable="'supt'">
-                {{firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').FullName}}
+            <td data-title="'Superintendent'" sortable="'opp.FullName'">
+                <span ng-if="!opp.$edit">{{firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').FullName}}</span>
+             <!--    <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').FullName" /></div> -->
             </td>
             <td data-title="'Email'" sortable="'email'">
-                {{firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').Email}}
+                <span ng-if="!opp.$edit">{{firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').Email}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').Email" /></div>
             </td>
-            <td data-title="'Course'" sortable="'Opp'">
-               <a ui-sref="app.opp-detail({contactId: '{{opp.id}}'})">{{opp.Account.Course}}</a> 
+            <td data-title="'Course'" sortable="'Account.Course'">
+               <a ui-sref="app.opp-detail({contactId: '{{opp.id}}'})"><span ng-if="!opp.$edit">{{opp.Account.Course}}</a> </span>
+               <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="opp.Account.Course" /></div>
             </td>
-            <td data-title="'Region'" sortable="'region'">
-                {{opp.Account.Address.State}}
+            <td data-title="'Region'" sortable="'Account.Address.State'">
+                <span ng-if="!opp.$edit">{{opp.Account.Address.State}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="opp.Account.Address.State" /></div>
             </td>
-            <td data-title="'Type'" sortable="'status'">
-                {{opp.Account.SubType}}
+            <td data-title="'Type'" sortable="'Account.SubType'">
+                <span ng-if="!opp.$edit">{{opp.Account.SubType}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="opp.Account.SubType" /></div>
             </td>
              <td data-title="'Profile'" sortable="'Profile'">
-                {{firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').SA4ContactOnGolf.Profile}}
+                <span ng-if="!opp.$edit">{{firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').SA4ContactOnGolf.Profile}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="firstMatch(opp.Contacts.$resources, 'IsPrimary', true, 'Contact').SA4ContactOnGolf.Profile" /></div>
             </td>
-             <td data-title="'Stage'" sortable="'status'">
-                {{opp.Stage}}
+             <td data-title="'Stage'" sortable="'Stage'">
+                <span ng-if="!opp.$edit">{{opp.Stage}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="opp.Stage" /></div>
+
+
             </td>
-             <td data-title="'Potential'" sortable="'status'">
-                {{opp.SalesPotential  | currency}}
+             <td data-title="'Potential'" sortable="'SalesPotential'">
+                <span ng-if="!opp.$edit">{{opp.SalesPotential  | currency}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="text" ng-model="opp.SalesPotential" /></div>
             </td>
-             <td data-title="'Close Date'" sortable="'status'">
-                {{opp.EstimatedClose | amDateFormat:'MM/DD/YYYY'}}
+             <td data-title="'Close Date'" sortable="'EstimatedClose'">
+                <span ng-if="!opp.$edit">{{opp.EstimatedClose | amDateFormat:'MM/DD/YYYY'}}</span>
+                <div ng-if="opp.$edit"><input class="form-control" type="date" ng-model="opp.EstimatedClose" /></div>
+            </td>
+            <td data-title="'Actions'">
+            
+             <a href="#">
+              
+              <a ng-if="!opp.$edit" href="" ng-click="enableInlineEdit(opp)" style="font-size:20px;"><i class="fa fa-edit"></i></a>
+                <a ng-if="opp.$edit" href="" class="btn btn-primary btn-xs" ng-click="saveOpp(opp)">Save</a>
+            </a>
+                
             </td>
         </tr>
     </table>

@@ -217,7 +217,7 @@ return {
         //add relationship if present 
         (feed.relationship != null ? "/" + feed.relationship : "") + 
         //add format type
-        "?format=json&count=200" + 
+        "?format=json&count=25" + 
         //Build query section and add limitValue if querlyLimit included
         (feed.query != null || feed.queryLimit != null ? "&where=" :"" ) + 
         (feed.query != null ?  feed.query : "") + 
@@ -398,7 +398,7 @@ return {
           config[mashup.type].url + mashup.feed + '/' + id + 
             (mashup.subfeed != null ? '/' + mashup.subfeed : "") + 
             '?fields=' + mashup.fields
-            + '&count=100',
+            + '&count=500',
           { headers: {'Authorization':  'Basic ' + btoa('myersmemories' + ":" + config[mashup.type].authKey) }}
         )  
     };

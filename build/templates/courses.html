@@ -49,28 +49,55 @@
     <table ng-table="tableParams" class="table table-striped" export-csv="csv">
         <tr ng-repeat="course in $data | filter:searchText">
             <td data-title="'Name'" sortable="'Course'">
-               <a ui-sref="app.course-detail({contactId: '{{course.id}}'})">{{course.Course}}</a> 
+               <a ui-sref="app.course-detail({contactId: '{{course.id}}'})"><span ng-if="!course.$edit">{{course.Course}}</a></span> 
+               <div ng-if="course.$edit"><input class="form-control" type="text" ng-model="course.Course" /></div>
             </td>
-            <td data-title="'Location'" sortable="'course'">
-                {{course.Address.City}} {{course.Address.State}}, {{course.Address.PostalCode}}
+            <td data-title="'Location'">
+                <span ng-if="!course.$edit">{{course.Address.City}} {{course.Address.State}}, {{course.Address.PostalCode}}</span>
+                <div ng-if="course.$edit">
+                <input class="form-control" type="text" ng-model="course.Address.City" />
+                <input class="form-control" type="text" ng-model="course.Address.State" />
+                <input class="form-control" type="text" ng-model="course.Address.PostalCode" />
+
+                </div>
             </td>
-            <td data-title="'Type'" sortable="'region'">
-                {{course.SubType}}
+            <td data-title="'Type'" sortable="'SubType'">
+                <span ng-if="!course.$edit">{{course.SubType}}</span>
+                <div ng-if="course.$edit"><input class="form-control" type="text" ng-model="course.SubType" /></div>
             </td>
-            <td data-title="'Status'" sortable="'status'">
-                {{course.Status}}
+            <td data-title="'Status'" sortable="'Status'">
+                <span ng-if="!course.$edit">{{course.Status}}</span>
+                <div ng-if="course.$edit"><input class="form-control" type="text" ng-model="course.Status" /></div>
             </td>
-            <td data-title="'Profile'" sortable="'region'">
-                 Irrigation - {{course.SA4AccountOnGolf.IrrigationSystem}}<br>
-                 Pump - {{course.SA4AccountOnGolf.PumpStation}}<br>
-                 Soil - {{course.SA4AccountOnGolf.SoilSensorSystem}}
+            <td data-title="'Profile'">
+                 <span ng-if="!course.$edit">Irrigation - {{course.SA4AccountOnGolf.IrrigationSystem}}<br></span>
+                 <div ng-if="course.$edit">Irrigation - <input class="form-control" type="text" ng-model="course.SA4AccountOnGolf.IrrigationSystem" /></div>
+                 <span ng-if="!course.$edit">Pump - {{course.SA4AccountOnGolf.PumpStation}}<br></span>
+                 <div ng-if="course.$edit">Pump - <input class="form-control" type="text" ng-model="course.SA4AccountOnGolf.PumpStation" /></div>
+                 <span ng-if="!course.$edit">Soil - {{course.SA4AccountOnGolf.SoilSensorSystem}}</span>
+                 <div ng-if="course.$edit">Soil - <input class="form-control" type="text" ng-model="course.SA4AccountOnGolf.SoilSensorSystem" /></div>
 
             </td>
-            <td data-title="'Superintendent'" sortable="'supt'">
-                {{firstMatch(course.Contacts.$resources, 'IsPrimary', true, 'FullName')}}
+            <td data-title="'Superintendent'">
+                <span ng-if="!course.$edit">{{firstMatch(course.Contacts.$resources, 'IsPrimary', true, 'FullName')}}</span>
+                <div ng-if="course.$edit"><input class="form-control" type="text" ng-model="firstMatch(course.Contacts.$resources, 'IsPrimary', true, 'FullName')" /></div>
             </td>
-            <td data-title="'Account Manager'" sortable="'owner'">
-                {{course.AccountManager.UserInfo.NameLF}}
+            <td data-title="'Account Manager'" >
+                <span ng-if="!course.$edit">{{course.AccountManager.UserInfo.NameLF}}</span>
+                <div ng-if="course.$edit">
+                <select ng-model="data.AccountManager"
+                    ng-options="item as item.NameLF for item in data.picklistAccountManager" style="width: 100px;">
+                </select>  
+                </div>
+            </td>
+               <td data-title="'Actions'">
+            
+             <a href="#">
+              
+              <a ng-if="!course.$edit" href="" ng-click="enableInlineEdit(course)" style="font-size:20px;"><i class="fa fa-edit"></i></a>
+                <a ng-if="course.$edit" href="" class="btn btn-primary btn-xs" ng-click="saveCourse(course)">Save</a>
+            </a>
+                
             </td>
         </tr>
     </table>

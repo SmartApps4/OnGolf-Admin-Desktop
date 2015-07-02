@@ -77,7 +77,7 @@
             <div ng-if="contact.$edit"><input class="form-control" type="text" ng-model="contact.Name" /></div>
               
             </td>
-            <td data-title="'Email'" sortable="'email'">
+            <td data-title="'Email'">
              <span ng-if="!contact.$edit"> {{contact.Email}} </span>
                 
                 <div ng-if="contact.$edit"><input class="form-control" type="text" ng-model="contact.Email" /></div>
@@ -99,6 +99,7 @@
                 <select ng-model="contact.SA4ContactOnGolf.Profile"
                     ng-options="item.text as item.text for item in data.picklistProfile">
                 </select>    
+            </div>
             </td>
              </td>
             <td data-title="'Style'" sortable="'style'">
